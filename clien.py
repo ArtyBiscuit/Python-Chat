@@ -1,7 +1,8 @@
 import socket
 pseudo = "default"
 
-host, port = ('localhost', 5566)
+host = input("IP:")
+port = int(input("Port:"))
 socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 pseudo = input("Enter Your Name: ")
@@ -18,8 +19,8 @@ except ConnectionError:
 finally:
     while True:
         msg = input("MSG: ")
-        if msg == "/deco":
-            break
         msg = msg.encode("utf8")
         socket.sendall(msg)
+        if msg == "/deco":
+            break
     socket.close()

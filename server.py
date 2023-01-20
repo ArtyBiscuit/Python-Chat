@@ -10,27 +10,29 @@ class ThreadClient(threading.Thread):
                 data = self.conn.recv(16)
                 data = data.decode("utf8")
                 name = data
-                #print(name,"connected to the server")
+                print("<", name, ">", "connected to the server from:", address)
+                print(threading.current_thread())
                 while True:
                         data = self.conn.recv(1024)
                         data = data.decode("utf8")
+                        if data == "/deco":
+                                print("<", name, ">", "disconnected from the server")
+                                break
                         if data:
-                                print(name,":", data)
+                                print("Neme:", name, "|", data)
 
-host, port = ('', 5566)
+host = ''
+port = int(input("Port:"))
 socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 socket.bind((host, port))
-print("Server open.")
-
-N = 0
+print("Server open on port:", port)
 
 while True:
         socket.listen(2)
         conn, address = socket.accept()
-        print("Clien connecter...")
+        #print("connection from:", address)
         my_thread = ThreadClient(conn)
         my_thread.start()
-        if N == 1:
-                break
 conn.close()
 socket.close()
+
