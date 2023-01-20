@@ -1,6 +1,7 @@
 import socket
 import threading
 
+clients=[]
 
 class ThreadClient(threading.Thread):
         def __init__(self, conn):
@@ -12,11 +13,15 @@ class ThreadClient(threading.Thread):
                 name = data
                 print("<", name, ">", "connected to the server from:", address)
                 print(threading.current_thread())
+                clients += [conn]
                 while True:
                         data = self.conn.recv(1024)
+                        for client in clients: 
+                                client.sendall(data)
                         data = data.decode("utf8")
                         if data == "/deco":
                                 print("<", name, ">", "disconnected from the server")
+                                clients -= [conn]
                                 break
                         if data:
                                 print("Neme:", name, "|", data)
