@@ -14,7 +14,6 @@ class   update_listener(threading.Thread):
                 threading.Thread.__init__(self)
                 self.socket = socket
             def run(self):
-                print("yep gro!")
                 while True:
                         data = self.socket.recv(1024)
                         data = data.decode("utf8")
@@ -34,7 +33,7 @@ finally:
     test = update_listener(socket)
     test.start()
     while True:
-        msg = input("MSG: ")
+        msg = input("\n")
         msg = msg.encode("utf8")
         socket.sendall(msg)
         if msg == "/deco":

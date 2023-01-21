@@ -18,8 +18,9 @@ class ThreadClient(threading.Thread):
                 while True:
                         data = self.conn.recv(1024)
                         for client in self.clients:
-                                if client != conn:
-                                        msg = name.encode("utf8") + ": " + data
+                                if client != self.conn:
+                                        test = ": "
+                                        msg = name.encode("utf8") + test.encode("utf8") + data
                                         client.sendall(msg)
                         data = data.decode("utf8")
                         if data == "/deco":
